@@ -6,41 +6,22 @@ import './Projects.css';
 
 function ProjectCard({ project, index, inView }) {
   return (
-    <div
-      className={`project-card glass-card ${project.featured ? 'project-card--featured' : ''} ${
-        inView ? 'project-card--visible' : ''
-      }`}
-      style={{ animationDelay: `${index * 0.12}s`, '--accent': project.color }}
-    >
+    <div className={`project-card glass-card ${project.featured ? 'project-card--featured' : ''} ${inView ? 'project-card--visible' : ''}`} style={{ animationDelay: `${index * 0.12}s`, '--accent': project.color }}>
       <div className="project-card__image">
         <img src={project.image} alt={project.title} loading="lazy" />
         <div className="project-card__overlay">
-          <a href={project.github} className="project-card__link" aria-label="GitHub">
-            <FiGithub />
-          </a>
-          <a href={project.live} className="project-card__link" aria-label="Live demo">
-            <FiExternalLink />
-          </a>
+          <a href={project.github} className="project-card__link" aria-label="GitHub"><FiGithub /></a>
+          <a href={project.live} className="project-card__link" aria-label="Live demo"><FiExternalLink /></a>
         </div>
       </div>
-
       <div className="project-card__content">
         <div className="project-card__top">
           <h3 className="project-card__title">{project.title}</h3>
-          {project.featured && (
-            <span className="project-card__badge">
-              <FiStar />
-              Featured
-            </span>
-          )}
+          {project.featured && (<span className="project-card__badge"><FiStar /> Featured</span>)}
         </div>
         <p className="project-card__description">{project.description}</p>
         <div className="project-card__tags">
-          {project.tags.map((tag) => (
-            <span key={tag} className="project-card__tag">
-              {tag}
-            </span>
-          ))}
+          {project.tags.map((tag) => (<span key={tag} className="project-card__tag">{tag}</span>))}
         </div>
       </div>
     </div>
@@ -52,16 +33,11 @@ export default function Projects() {
   const [projects, setProjects] = useState(() => getProjects());
 
   useEffect(() => {
-    const updateProjects = () => {
-      setProjects(getProjects());
-    };
+    const updateProjects = () => { setProjects(getProjects()); };
     updateProjects();
     window.addEventListener('projects-updated', updateProjects);
     const interval = setInterval(updateProjects, 2000);
-    return () => {
-      window.removeEventListener('projects-updated', updateProjects);
-      clearInterval(interval);
-    };
+    return () => { window.removeEventListener('projects-updated', updateProjects); clearInterval(interval); };
   }, []);
 
   if (!projects || projects.length === 0) {
@@ -82,15 +58,10 @@ export default function Projects() {
       <div className="container">
         <div className={`projects__header ${inView ? 'projects__header--visible' : ''}`}>
           <h2 className="section-title">Loyihalar</h2>
-          <p className="section-subtitle">
-            Yaqinda bajarilgan eng yaxshi loyihalarim.
-          </p>
+          <p className="section-subtitle">Yaqinda bajarilgan eng yaxshi loyihalarim.</p>
         </div>
-
         <div className="projects__grid">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} inView={inView} />
-          ))}
+          {projects.map((project, i) => (<ProjectCard key={project.id} project={project} index={i} inView={inView} />))}
         </div>
       </div>
     </section>
