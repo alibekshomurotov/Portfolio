@@ -1,3 +1,8 @@
+// ============================================================
+// STORAGE UTILS - Ma'lumotlar bazasi (localStorage)
+// ============================================================
+
+// ===== CONSTANTS =====
 const COUNTER_KEY = 'alibek-portfolio-visits';
 const MESSAGES_KEY = 'portfolio-messages';
 const SETTINGS_KEY = 'portfolio-admin-settings';
@@ -104,45 +109,24 @@ function trackVisit() {
 
   const log = JSON.parse(localStorage.getItem(COUNTER_KEY) || '{"total":0,"today":0,"date":"","unique":0,"daily":{},"log":[],"devices":{},"browsers":{},"os":{}}');
 
-  if (log.date !== today) {
-    log.date = today;
-    log.today = 0;
-  }
-
+  if (log.date !== today) { log.date = today; log.today = 0; }
   log.total++;
   log.today++;
-
   if (isNew) log.unique = (log.unique || 0) + 1;
-
   if (!log.daily) log.daily = {};
   log.daily[today] = (log.daily[today] || 0) + 1;
-
   if (!log.devices) log.devices = {};
   log.devices[device] = (log.devices[device] || 0) + 1;
-
   if (!log.browsers) log.browsers = {};
   log.browsers[browser] = (log.browsers[browser] || 0) + 1;
-
   if (!log.os) log.os = {};
   log.os[os] = (log.os[os] || 0) + 1;
 
-  log.log.push({
-    time: now.toLocaleString('uz-UZ'),
-    date: today,
-    timestamp: now.getTime(),
-    device,
-    browser,
-    os,
-    isNew,
-  });
-
+  log.log.push({ time: now.toLocaleString('uz-UZ'), date: today, timestamp: now.getTime(), device, browser, os, isNew });
   if (log.log.length > 200) log.log = log.log.slice(-200);
 
   const thirtyDaysAgo = new Date(Date.now() - 30 * 86400000).toISOString().split('T')[0];
-  Object.keys(log.daily || {}).forEach(d => {
-    if (d < thirtyDaysAgo) delete log.daily[d];
-  });
-
+  Object.keys(log.daily || {}).forEach(d => { if (d < thirtyDaysAgo) delete log.daily[d]; });
   localStorage.setItem(COUNTER_KEY, JSON.stringify(log));
 }
 
@@ -159,20 +143,12 @@ function getProjects() {
 }
 
 // ===== MESSAGES =====
-function getMessages() {
-  return JSON.parse(localStorage.getItem(MESSAGES_KEY) || '[]');
-}
-
-function saveMessages(msgs) {
-  localStorage.setItem(MESSAGES_KEY, JSON.stringify(msgs));
-}
+function getMessages() { return JSON.parse(localStorage.getItem(MESSAGES_KEY) || '[]'); }
+function saveMessages(msgs) { localStorage.setItem(MESSAGES_KEY, JSON.stringify(msgs)); }
 
 // ===== SETTINGS =====
 function getSettings() {
-  return JSON.parse(localStorage.getItem(SETTINGS_KEY) || JSON.stringify({
-    showVisitorCounter: true,
-    showOnlineBadge: true,
-  }));
+  return JSON.parse(localStorage.getItem(SETTINGS_KEY) || JSON.stringify({ showVisitorCounter: true, showOnlineBadge: true }));
 }
 
 // ===== TESTIMONIALS =====
