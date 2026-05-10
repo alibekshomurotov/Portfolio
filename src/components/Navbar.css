@@ -1,0 +1,218 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.navbar--scrolled {
+  padding: 12px 0;
+  background: var(--navbar-bg, rgba(10, 10, 15, 0.85));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.navbar__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  transition: var(--transition);
+}
+
+.navbar__logo:hover {
+  color: var(--accent-1);
+}
+
+.navbar__logo-bracket {
+  color: var(--accent-2);
+}
+
+.navbar__logo-dot {
+  color: var(--accent-1);
+}
+
+.navbar__links {
+  display: flex;
+  list-style: none;
+  gap: 8px;
+}
+
+.navbar__link {
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: 50px;
+  transition: var(--transition);
+  position: relative;
+}
+
+.navbar__link:hover {
+  color: var(--text-primary);
+  background: var(--bg-glass);
+}
+
+.navbar__link--active {
+  color: var(--text-primary);
+  background: rgba(108, 99, 255, 0.15);
+}
+
+.navbar__link--active::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: var(--accent-1);
+  border-radius: 2px;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar__cta {
+  padding: 10px 24px;
+  font-size: 0.85rem;
+}
+
+/* ========== THEME TOGGLE ========== */
+.navbar__theme-toggle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-glass);
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.navbar__theme-toggle:hover {
+  border-color: var(--accent-1);
+  background: rgba(108, 99, 255, 0.1);
+  transform: rotate(15deg) scale(1.1);
+}
+
+.navbar__theme-icon {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__sun,
+.navbar__moon {
+  position: absolute;
+  font-size: 20px;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.navbar__sun {
+  color: #febc2e;
+  opacity: 0;
+  transform: scale(0) rotate(-180deg);
+}
+
+.navbar__moon {
+  color: var(--accent-2);
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+/* Light mode - quyosh ko'rinadi */
+.navbar__theme-icon--light .navbar__sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.navbar__theme-icon--light .navbar__moon {
+  opacity: 0;
+  transform: scale(0) rotate(180deg);
+}
+
+/* Dark mode - oy ko'rinadi */
+.navbar__theme-icon--dark .navbar__sun {
+  opacity: 0;
+  transform: scale(0) rotate(180deg);
+}
+
+.navbar__theme-icon--dark .navbar__moon {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.navbar__mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 768px) {
+  .navbar__links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--navbar-bg, rgba(10, 10, 15, 0.97));
+    backdrop-filter: blur(30px);
+    flex-direction: column;
+    padding: 100px 30px;
+    gap: 4px;
+    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    border-left: 1px solid var(--border-glass);
+  }
+
+  .navbar__links--open {
+    right: 0;
+  }
+
+  .navbar__link {
+    font-size: 1rem;
+    padding: 14px 20px;
+  }
+
+  .navbar__cta {
+    display: none;
+  }
+
+  .navbar__mobile-toggle {
+    display: block;
+  }
+
+  .navbar__theme-toggle {
+    width: 40px;
+    height: 40px;
+  }
+}

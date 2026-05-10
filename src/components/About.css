@@ -1,0 +1,318 @@
+.about__header {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about__header--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about__header .section-subtitle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 80px;
+  margin-bottom: 80px;
+  align-items: center;
+}
+
+.about__image-side,
+.about__text-side {
+  opacity: 0;
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about__image-side {
+  transform: translateX(-40px);
+}
+
+.about__text-side {
+  transform: translateX(40px);
+}
+
+.about__image-side--visible,
+.about__text-side--visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===== Image Container (tilt area) ===== */
+.about__image-container {
+  position: relative;
+  max-width: 360px;
+  margin: 0 auto;
+  cursor: pointer;
+  aspect-ratio: 6/8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glow behind everything */
+.about__image-glow {
+  position: absolute;
+  width: 85%;
+  height: 85%;
+  background: conic-gradient(from 180deg, #6c63ff, #00d4aa, #ff6b9d, #febc2e, #6c63ff);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  filter: blur(60px);
+  opacity: 0.4;
+  z-index: 0;
+  animation: glow-breathe 5s ease-in-out infinite;
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(1.05); }
+}
+
+/* ===== 3D Tilt Wrapper ===== */
+.about__image-tilt {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  will-change: transform;
+  width: 300px;
+  height: 380px;
+}
+
+/* Animated border glow around photo */
+.about__image-border-glow {
+  position: absolute;
+  inset: -4px;
+  border-radius: 24px;
+  background: conic-gradient(from var(--border-angle, 0deg), #6c63ff, #00d4aa, #ff6b9d, #febc2e, #6c63ff);
+  z-index: -1;
+  animation: rotate-border 6s linear infinite;
+  filter: blur(2px);
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-border {
+  to { --border-angle: 360deg; }
+}
+
+/* Fallback for browsers without @property */
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .about__image-border-glow {
+    background: linear-gradient(135deg, #6c63ff, #00d4aa, #ff6b9d);
+  }
+}
+
+/* ===== Photo Box ===== */
+.about__image-box {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+  border: 2px solid var(--border-glass);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* Loaded photo */
+.about__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Empty state placeholder */
+.about__image-placeholder-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+  padding: 20px;
+  text-align: center;
+  height: 100%;
+  justify-content: center;
+}
+
+.about__camera-icon {
+  width: 72px;
+  height: 72px;
+  background: rgba(108, 99, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(108, 99, 255, 0.3);
+}
+
+.about__camera-icon svg {
+  color: var(--accent-1);
+  opacity: 0.7;
+}
+
+.about__upload-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-family: 'Space Grotesk', monospace;
+  background: rgba(108, 99, 255, 0.08);
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(108, 99, 255, 0.15);
+}
+
+.about__upload-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* ===== Glare / Light Reflection ===== */
+.about__image-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 20px;
+  transition: opacity 0.3s ease;
+}
+
+/* ===== Decorative dots ===== */
+.about__image-dots {
+  position: absolute;
+  bottom: -15px;
+  right: -15px;
+  display: grid;
+  grid-template-columns: repeat(5, 8px);
+  gap: 10px;
+  z-index: 0;
+}
+
+.about__dot {
+  width: 4px;
+  height: 4px;
+  background: var(--accent-1);
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+/* ===== Text Side ===== */
+.about__heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.about__text {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.about__info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.about__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.about__info-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.about__info-value {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.about__info-value--available {
+  color: var(--accent-2);
+}
+
+/* ===== Stats ===== */
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.about__stat {
+  padding: 32px 20px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about__stat--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about__stat-icon {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.about__stat-value {
+  display: block;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.about__stat-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about__image-container {
+    max-width: 280px;
+  }
+
+  .about__image-tilt {
+    width: 250px;
+    height: 320px;
+  }
+}

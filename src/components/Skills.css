@@ -1,0 +1,129 @@
+.skills__header {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s ease;
+}
+
+.skills__header--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skills__header .section-subtitle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.skills__categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.skills__category {
+  padding: 32px 28px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.skills__category--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skills__category-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.skills__list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.skill-bar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.skill-bar__name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.skill-bar__icon {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.skill-bar__percent {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.skill-bar__track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.skill-bar__fill {
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: var(--fill-color, var(--gradient-1));
+  transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.skill-bar__fill[data-visible="true"] {
+  width: var(--target-width);
+}
+
+.skill-bar__fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--fill-color, var(--accent-1));
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--fill-color, var(--accent-1));
+  opacity: 0;
+  transition: opacity 0.3s ease 1s;
+}
+
+.skill-bar__fill[data-visible="true"]::after {
+  opacity: 1;
+}
+
+@media (max-width: 968px) {
+  .skills__categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .skills__categories {
+    grid-template-columns: 1fr;
+  }
+}
