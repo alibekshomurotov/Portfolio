@@ -21,7 +21,7 @@ export default function About() {
     const img = new Image();
     img.onload = () => setImgLoaded(true);
     img.onerror = () => setImgLoaded(false);
-    img.src = './public/alibek.jpg';
+    img.src = './alibek.jpg';
   }, []);
 
   // 3D Tilt - mouse follow
@@ -76,7 +76,7 @@ export default function About() {
 
                 <div className="about__image-box">
                   {imgLoaded ? (
-                    <img src="./public/alibek.jpg" alt="Alibek" className="about__photo" />
+                    <img src="./alibek.jpg" alt="Alibek" className="about__photo" />
                   ) : (
                     <div className="about__image-placeholder-empty">
                       <div className="about__camera-icon">
