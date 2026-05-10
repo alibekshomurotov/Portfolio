@@ -21,7 +21,7 @@ export default function About() {
     const img = new Image();
     img.onload = () => setImgLoaded(true);
     img.onerror = () => setImgLoaded(false);
-    img.src = '/alibek.jpg';
+    img.src = 'public/alibek.jpg';
   }, []);
 
   // 3D Tilt - mouse follow
