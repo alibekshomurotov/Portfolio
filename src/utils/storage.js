@@ -1,16 +1,57 @@
-// ============================================================
-// STORAGE UTILS - Ma'lumotlar bazasi (localStorage)
-// ============================================================
-
-// ===== CONSTANTS =====
 const COUNTER_KEY = 'alibek-portfolio-visits';
 const MESSAGES_KEY = 'portfolio-messages';
 const SETTINGS_KEY = 'portfolio-admin-settings';
 const TESTIMONIALS_KEY = 'portfolio-testimonials';
 const EXPERIENCES_KEY = 'portfolio-experiences';
 const CONTACT_KEY = 'portfolio-contact';
+const PROJECTS_KEY = 'portfolio-projects';
 
 // ===== DEFAULT DATA =====
+const DEFAULT_PROJECTS = [
+  {
+    id: '1', title: 'E-Commerce Platform',
+    description: "Zamonaviy onlayn do'kon — React va Node.js bilan yaratilgan. To'lov sistemasini integratsiya qilgan, real-time buyurtma kuzatish va admin panel mavjud.",
+    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
+    github: '#', live: '#', featured: true, color: '#6c63ff', createdAt: Date.now() - 86400000 * 5,
+  },
+  {
+    id: '2', title: 'AI Chat Application',
+    description: "Sun'iy intellekt asosidagi chat ilovasi. Real-time xabar almashish, fayl yuborish va AI javob berish funksiyalari bor.",
+    tags: ['Next.js', 'OpenAI', 'WebSocket', 'Prisma'],
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop',
+    github: '#', live: '#', featured: true, color: '#00d4aa', createdAt: Date.now() - 86400000 * 4,
+  },
+  {
+    id: '3', title: 'Dashboard Analytics',
+    description: "Biznes uchun analitik dashboard. Ma'lumotlarni vizualizatsiya qilish, hisobot yaratish va real-time statistika ko'rish.",
+    tags: ['React', 'D3.js', 'Python', 'PostgreSQL'],
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+    github: '#', live: '#', featured: true, color: '#ff6b9d', createdAt: Date.now() - 86400000 * 3,
+  },
+  {
+    id: '4', title: 'Social Media App',
+    description: "Mobil qurilmalar uchun ijtimoiy tarmoq ilovasi. Post yaratish, commenting, va real-time notifications.",
+    tags: ['React Native', 'Firebase', 'Redux'],
+    image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=600&h=400&fit=crop',
+    github: '#', live: '#', featured: false, color: '#febc2e', createdAt: Date.now() - 86400000 * 2,
+  },
+  {
+    id: '5', title: 'Portfolio Generator',
+    description: "Portfolio saytlar avtomatik yaratuvchi. Slayder bilan sozlash, bir nechta tema tanlash imkoniyati.",
+    tags: ['Next.js', 'Tailwind', 'Supabase'],
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+    github: '#', live: '#', featured: false, color: '#6c63ff', createdAt: Date.now() - 86400000,
+  },
+  {
+    id: '6', title: 'Task Management Tool',
+    description: "Jamoa uchun vazifalar boshqaruvi ilovasi. Kanban board, deadline tracking va jamoa bilan hamkorlik.",
+    tags: ['Vue.js', 'Express', 'MongoDB'],
+    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop',
+    github: '#', live: '#', featured: false, color: '#00d4aa', createdAt: Date.now(),
+  },
+];
+
 const DEFAULT_TESTIMONIALS = [
   { id: '1', name: 'Sardor Karimov', role: 'CEO, TechCorp Solutions', text: "Alibek bizning eng yaxshi dasturchimiz. React va Node.js bilan ajoyib platforma yaratdi.", rating: 5, color: '#6c63ff' },
   { id: '2', name: 'Nilufar Xasanova', role: 'Product Manager, Digital Agency', text: "Alibek bilan 3 ta yirik loyihada ishladik. Har safar o'z vaqtida va sifatli natija berdi.", rating: 5, color: '#00d4aa' },
@@ -26,9 +67,9 @@ const DEFAULT_EXPERIENCES = [
 ];
 
 const DEFAULT_CONTACT = [
-  { id: '1', icon: 'mail', label: 'Email', value: 'shomurodovalibek5@gmail.com', color: '#6c63ff' },
-  { id: '2', icon: 'phone', label: 'Telefon', value: '+998 99 554 85 84', color: '#00d4aa' },
-  { id: '3', icon: 'map', label: "Manzil", value: "O'zbekiston, Xorazm", color: '#ff6b9d' },
+  { id: '1', icon: 'mail', label: 'Email', value: 'dev@example.com', color: '#6c63ff' },
+  { id: '2', icon: 'phone', label: 'Telefon', value: '+998 90 123 45 67', color: '#00d4aa' },
+  { id: '3', icon: 'map', label: "Manzil", value: "O'zbekiston, Toshkent", color: '#ff6b9d' },
 ];
 
 // ===== VISITOR TRACKING =====
@@ -109,6 +150,14 @@ function getVisitStats() {
   return JSON.parse(localStorage.getItem(COUNTER_KEY) || '{"total":0,"today":0,"date":"","unique":0,"daily":{},"log":[],"devices":{},"browsers":{},"os":{}}');
 }
 
+// ===== PROJECTS =====
+function getProjects() {
+  const stored = localStorage.getItem(PROJECTS_KEY);
+  if (stored) return JSON.parse(stored);
+  localStorage.setItem(PROJECTS_KEY, JSON.stringify(DEFAULT_PROJECTS));
+  return DEFAULT_PROJECTS;
+}
+
 // ===== MESSAGES =====
 function getMessages() {
   return JSON.parse(localStorage.getItem(MESSAGES_KEY) || '[]');
@@ -154,6 +203,7 @@ function getContactInfo() {
 export {
   trackVisit,
   getVisitStats,
+  getProjects,
   getMessages,
   saveMessages,
   getSettings,
@@ -161,4 +211,5 @@ export {
   getExperiences,
   getContactInfo,
   COUNTER_KEY,
+  PROJECTS_KEY,
 };
