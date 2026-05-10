@@ -76,7 +76,7 @@ export default function About() {
 
                 <div className="about__image-box">
                   {imgLoaded ? (
-                    <img src="/alibek.jpg" alt="Alibek" className="about__photo" />
+                    <img src="public/alibek.jpg" alt="Alibek" className="about__photo" />
                   ) : (
                     <div className="about__image-placeholder-empty">
                       <div className="about__camera-icon">
