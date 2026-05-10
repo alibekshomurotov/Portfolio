@@ -1,13 +1,8 @@
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 import { FiExternalLink, FiGithub, FiStar } from 'react-icons/fi';
+import { getProjects } from '../utils/storage';
 import './Projects.css';
-
-function getStoredProjects() {
-  const stored = localStorage.getItem('portfolio-projects');
-  if (stored) return JSON.parse(stored);
-  return null;
-}
 
 function ProjectCard({ project, index, inView }) {
   return (
@@ -54,16 +49,14 @@ function ProjectCard({ project, index, inView }) {
 
 export default function Projects() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 });
-  const [projects, setProjects] = useState(getStoredProjects);
+  const [projects, setProjects] = useState(() => getProjects());
 
   useEffect(() => {
-    // localStorage dan loyihalarni o'qish
     const updateProjects = () => {
-      setProjects(getStoredProjects());
+      setProjects(getProjects());
     };
     updateProjects();
     window.addEventListener('projects-updated', updateProjects);
-    // Har 2 soniyada tekshirish (admin o'zgartirsa)
     const interval = setInterval(updateProjects, 2000);
     return () => {
       window.removeEventListener('projects-updated', updateProjects);
